@@ -7,12 +7,9 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
-# load_dotenv()
-
-# print(os.getenv("OPENAI_API_KEY"))
 
 
-url = "https://youtu.be/DcWqzZ3I2cY?si=yoir7h8_T2CqMaEq"
+# url = "https://youtu.be/DcWqzZ3I2cY?si=yoir7h8_T2CqMaEq"
 def yt_url_to_vectordb(url, open_ai_key):
     embedding = OpenAIEmbeddings(openai_api_key=open_ai_key)
     loader = YoutubeLoader.from_youtube_url(url)
