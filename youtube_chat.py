@@ -12,7 +12,7 @@ load_dotenv()
 # print(os.getenv("OPENAI_API_KEY"))
 
 embedding = OpenAIEmbeddings()
-url = "https://youtu.be/DcWqzZ3I2cY?si=yaCCqDsAj-OOznTu"
+url = "https://youtu.be/DcWqzZ3I2cY?si=yoir7h8_T2CqMaEq"
 def yt_url_to_vectordb(url):
     loader = YoutubeLoader.from_youtube_url(url)
     docs = loader.load()
@@ -22,7 +22,7 @@ def yt_url_to_vectordb(url):
     )
     docs = text_splitter.split_documents(docs)
     db = FAISS.from_documents(docs, embedding)
-    return docs
+    return db
 
 def get_query_response(db, query, k=4):
     docs = db.similarity_search(query, k=k)
@@ -52,4 +52,4 @@ def get_query_response(db, query, k=4):
 
 
 test = yt_url_to_vectordb(url)
-print(get_query_response(test, "what are jezz bezos thoughts on disagree and commit"))
+print(get_query_response(test, "thoughts of bezos on amazon"))
