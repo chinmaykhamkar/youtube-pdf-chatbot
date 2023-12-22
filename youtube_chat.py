@@ -51,8 +51,3 @@ def get_query_response(db, query, open_ai_key, k=4):
     response = response.replace("\n", " ")
     return response
 
-    
-
-# test = yt_url_to_vectordb(url, "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")
-# print(test)
-# print(get_query_response(test, "thoughts of bezos on amazon", "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"))
