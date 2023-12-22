@@ -50,6 +50,7 @@ def get_query_response(db, query, k=4):
     response = response.replace("\n", " ")
     return response
 
+    
 
 # test = yt_url_to_vectordb(url)
 # print(get_query_response(test, "thoughts of bezos on amazon"))
