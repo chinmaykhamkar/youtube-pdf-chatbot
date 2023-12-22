@@ -5,7 +5,7 @@ st.set_page_config(
     page_title = "Youtube and PDF Chat app",
     page_icon = "🗣️",
 )
-with st.sidebar:
+with st.sidebar:    
     open_ai_key = st.text_input("Enter OpenAI API key", type="password")
     "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
 
@@ -20,7 +20,7 @@ submit = url_input.form_submit_button("Submit")
 
 if submit:    
     if 'video_embeddings' not in st.session_state:
-        st.session_state.video_embeddings = ytc.yt_url_to_vectordb(video_url)
+        st.session_state.video_embeddings = ytc.yt_url_to_vectordb(video_url, open_ai_key)
 
 if 'messages' not in st.session_state:
     st.session_state['messages'] = [
@@ -40,6 +40,6 @@ if prompt := st.chat_input():
         
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    response = ytc.get_query_response(st.session_state.video_embeddings, prompt)
+    response = ytc.get_query_response(st.session_state.video_embeddings, prompt, open_ai_key)
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.chat_message("assistant").write(response)

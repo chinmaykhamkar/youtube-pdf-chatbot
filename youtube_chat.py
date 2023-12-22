@@ -7,13 +7,14 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
-load_dotenv()
+# load_dotenv()
 
 # print(os.getenv("OPENAI_API_KEY"))
 
-embedding = OpenAIEmbeddings()
+
 url = "https://youtu.be/DcWqzZ3I2cY?si=yoir7h8_T2CqMaEq"
-def yt_url_to_vectordb(url):
+def yt_url_to_vectordb(url, open_ai_key):
+    embedding = OpenAIEmbeddings(openai_api_key=open_ai_key)
     loader = YoutubeLoader.from_youtube_url(url)
     docs = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(
@@ -24,11 +25,11 @@ def yt_url_to_vectordb(url):
     db = FAISS.from_documents(docs, embedding)
     return db
 
-def get_query_response(db, query, k=4):
+def get_query_response(db, query, open_ai_key, k=4):
     docs = db.similarity_search(query, k=k)
     merged_docs = " ".join([doc.page_content for doc in docs])
     
-    llm = OpenAI(model = "text-davinci-003")
+    llm = OpenAI(openai_api_key = open_ai_key, model = "text-davinci-003")
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
         template=""" you are a helpful yoututbe assistant whos job is to
@@ -52,5 +53,6 @@ def get_query_response(db, query, k=4):
 
     
 
-# test = yt_url_to_vectordb(url)
-# print(get_query_response(test, "thoughts of bezos on amazon"))
+# test = yt_url_to_vectordb(url, "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")
+# print(test)
+# print(get_query_response(test, "thoughts of bezos on amazon", "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"))
