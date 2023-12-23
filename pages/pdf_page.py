@@ -14,8 +14,32 @@ def main():
     if pdf is None:
         st.info("Please upload a pdf file")
     else:
-        pdf_read = pfc.pdf_reader(pdf)
-        st.write(pdf_read)
+        if open_ai_key is None:
+            st.info("Please enter your OpenAI API key")
+            st.stop()
+        st.session_state.pdf_embeddings = pfc.pdf_reader(pdf, open_ai_key)
+        # st.write(st.session_state.pdf_embeddings)
+    if 'messages' not in st.session_state:
+         st.session_state['messages'] = [
+        {"role": "assistant", "content": "I'm you are a helpful PDF assistant."},
+    ]
+         
+    for msg in st.session_state.messages:
+        st.chat_message(msg["role"]).write(msg["content"])
+    
+    if prompt := st.chat_input():
+        if not open_ai_key:
+            st.info("Please enter your OpenAI API key")
+            st.stop()
+        if pdf is None:
+            st.info("Please upload a pdf file")
+            st.stop()
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.chat_message("user").write(prompt)
+        response = pfc.get_query_response(st.session_state.pdf_embeddings, prompt, open_ai_key)
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        st.chat_message("assistant").write(response)    
+        
 
 
 if __name__ == '__main__':
