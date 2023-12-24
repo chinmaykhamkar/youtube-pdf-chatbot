@@ -6,8 +6,8 @@ from langchain.vectorstores import FAISS
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-import os 
-import pickle
+# import os 
+# import pickle
 
 
 def pdf_reader(pdf, open_ai_key):
@@ -21,15 +21,15 @@ def pdf_reader(pdf, open_ai_key):
         chunk_overlap=200,
     )
     chunks = text_splitter.split_text(text)  
-    store_name = pdf.name[:-4]
-    if os.path.exists(f"{store_name}.pkl"):
-        with open(f"{store_name}.pkl", "rb") as f:
-            db = pickle.load(f)
-    else:
-        embeddings = OpenAIEmbeddings(openai_api_key=open_ai_key)  
-        db = FAISS.from_texts(chunks, embeddings)  
-        with open(f"{store_name}.pkl", "wb") as f:
-            pickle.dump(db, f)      
+    # store_name = pdf.name[:-4]
+    # if os.path.exists(f"{store_name}.pkl"):
+    #     with open(f"{store_name}.pkl", "rb") as f:
+    #         db = pickle.load(f)
+    # else:
+    embeddings = OpenAIEmbeddings(openai_api_key=open_ai_key)  
+    db = FAISS.from_texts(chunks, embeddings)  
+        # with open(f"{store_name}.pkl", "wb") as f:
+        #     pickle.dump(db, f)      
     return db
     
 def get_query_response(db, query, open_ai_key, k=4):
