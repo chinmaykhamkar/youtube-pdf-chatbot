@@ -19,12 +19,12 @@ def main():
             st.stop()
         st.session_state.pdf_embeddings = pfc.pdf_reader(pdf, open_ai_key)
         # st.write(st.session_state.pdf_embeddings)
-    if 'messages' not in st.session_state:
-         st.session_state['messages'] = [
+    if 'message' not in st.session_state:
+         st.session_state['message'] = [
         {"role": "assistant", "content": "I'm you are a helpful PDF assistant."},
     ]
          
-    for msg in st.session_state.messages:
+    for msg in st.session_state.message:
         st.chat_message(msg["role"]).write(msg["content"])
     
     if prompt := st.chat_input():
@@ -34,10 +34,10 @@ def main():
         if pdf is None:
             st.info("Please upload a pdf file")
             st.stop()
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.message.append({"role": "user", "content": prompt})
         st.chat_message("user").write(prompt)
         response = pfc.get_query_response(st.session_state.pdf_embeddings, prompt, open_ai_key)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        st.session_state.message.append({"role": "assistant", "content": response})
         st.chat_message("assistant").write(response)    
         
 

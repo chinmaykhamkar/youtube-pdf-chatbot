@@ -24,7 +24,7 @@ if submit:
 
 if 'messages' not in st.session_state:
     st.session_state['messages'] = [
-        {"role": "assistant", "content": "I'm you are a helpful yoututbe assistant."},
+        {"role": "assistant", "content": "I'm you are a helpful youtube assistant."},
     ]
 
 for msg in st.session_state.messages:
