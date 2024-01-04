@@ -26,7 +26,7 @@ def get_query_response(db, query, open_ai_key, k=4):
     docs = db.similarity_search(query, k=k)
     merged_docs = " ".join([doc.page_content for doc in docs])
     
-    llm = OpenAI(openai_api_key = open_ai_key, model = "text-davinci-003")
+    llm = OpenAI(openai_api_key = open_ai_key, model = "gpt-3.5-turbo")
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
         template=""" you are a helpful yoututbe assistant whos job is to
