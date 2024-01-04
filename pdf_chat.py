@@ -35,7 +35,7 @@ def pdf_reader(pdf, open_ai_key):
 def get_query_response(db, query, open_ai_key, k=4):
     docs = db.similarity_search(query, k=4)
     merged_docs = " ".join([doc.page_content for doc in docs])
-    llm = OpenAI(openai_api_key = open_ai_key, model = "text-davinci-003")
+    llm = OpenAI(openai_api_key = open_ai_key, model = "gpt-3.5-turbo")
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
         template="""you are a helpful PDF assistant whos job is to answer questions
