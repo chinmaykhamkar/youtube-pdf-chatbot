@@ -7,4 +7,4 @@ streamlit==1.29.0
 openai==1.6.1
 youtube-transcript-api==0.6.1
 tiktoken==0.5.2
-faiss-cpu==1.7.4
+faiss-cpu==1.7.4    

@@ -1,11 +1,11 @@
-from langchain.llms import OpenAI
+from langchain.llms.openai import OpenAI
 import os
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.document_loaders import YoutubeLoader
+from langchain_community.document_loaders import YoutubeLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores.faiss import FAISS
 from dotenv import load_dotenv
 
 
@@ -26,7 +26,7 @@ def get_query_response(db, query, open_ai_key, k=4):
     docs = db.similarity_search(query, k=k)
     merged_docs = " ".join([doc.page_content for doc in docs])
     
-    llm = OpenAI(openai_api_key = open_ai_key, model = "text-davinci-003")
+    llm = OpenAI(openai_api_key = open_ai_key, model = "gpt-4o-mini")
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
         template=""" you are a helpful yoututbe assistant whos job is to

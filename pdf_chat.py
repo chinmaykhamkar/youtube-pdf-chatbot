@@ -9,6 +9,14 @@ from langchain.chains import LLMChain
 # import os 
 # import pickle
 
+## test pdf reader
+
+def test_pdf():
+    pdf_read = PdfReader('./impromptu-rh.pdf')
+    text = ""
+    for page in pdf_read.pages:
+        text += page.extract_text()
+    print(text)
 
 def pdf_reader(pdf, open_ai_key):
     pdf_read = PdfReader(pdf)
@@ -35,7 +43,7 @@ def pdf_reader(pdf, open_ai_key):
 def get_query_response(db, query, open_ai_key, k=4):
     docs = db.similarity_search(query, k=4)
     merged_docs = " ".join([doc.page_content for doc in docs])
-    llm = OpenAI(openai_api_key = open_ai_key, model = "text-davinci-003")
+    llm = OpenAI(openai_api_key = open_ai_key, model = "gpt-4o-mini")
     prompt = PromptTemplate(
         input_variables=["question", "docs"],
         template="""you are a helpful PDF assistant whos job is to answer questions
@@ -56,3 +64,4 @@ def get_query_response(db, query, open_ai_key, k=4):
     return response
     
 
+test_pdf()
