@@ -8,7 +8,7 @@ with st.sidebar:
 
 def main():
     st.title("PDF Chatbot")
-    st.caption("Chat with any pdf file")        
+    st.caption("Chat with any pdf file!!")        
     
     pdf = st.file_uploader("upload your pdf", type='pdf')
     if pdf is None:
